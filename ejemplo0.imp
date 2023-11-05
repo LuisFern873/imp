@@ -1,6 +1,0 @@
-var bool a, b;
-a = true and true;
-b = false;
-print(a and (b or a));
-print(b or a);
-print(b)

@@ -75,9 +75,21 @@ int ImpPrinter::visit(IfStatement* s) {
 int ImpPrinter::visit(WhileStatement* s) {
   cout << "while (";
   s->cond->accept(this);
-  cout << ") do" << endl;;
+  cout << ") do" << endl;
   s->body->accept(this);
   cout << "endwhile";
+  return 0;
+}
+
+// stm ::= 'for' i ':' e1 ',' e2 'do' Body 'endfor'
+int ImpPrinter::visit(ForStatement* s) {
+  cout << "for " << s->iterator << " : ";
+  s->e1->accept(this);
+  cout << ", ";
+  s->e2->accept(this);
+  cout << " do" << endl;
+  s->body->accept(this);
+  cout << "endfor";
   return 0;
 }
 

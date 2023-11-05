@@ -79,6 +79,27 @@ int ImpInterpreter::visit(WhileStatement* s) {
  return 0;
 }
 
+int ImpInterpreter::visit(ForStatement* s) {
+  int begin = s->e1->accept(this);
+  int end = s->e2->accept(this);
+
+  if (begin <= end) {
+    env.add_var(s->iterator, begin);
+    for (int i = begin; i <= end; i++) {
+      s->body->accept(this);
+      env.update(s->iterator, i + 1);
+    }
+  } else {
+    env.add_var(s->iterator, begin);
+    for (int i = begin; i >= end; i--) {
+      s->body->accept(this);
+      env.update(s->iterator, i - 1);
+    }
+  }
+
+  return 0;
+}
+
 int ImpInterpreter::visit(BinaryExp* e) {
   int v1 = e->left->accept(this);
   int v2 = e->right->accept(this);

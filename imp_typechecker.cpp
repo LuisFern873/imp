@@ -88,6 +88,16 @@ void ImpTypeChecker::visit(WhileStatement* s) {
  return;
 }
 
+void ImpTypeChecker::visit(ForStatement* s) {
+  if (!s->e1->accept(this).match(inttype) or !s->e1->accept(this).match(inttype)) {
+    cout << "Tipos en ForStm deben de ser int" << endl;
+    exit(0);
+  }
+  env.add_var(s->iterator, inttype);
+  s->body->accept(this);
+  return;
+}
+
 ImpType ImpTypeChecker::visit(BinaryExp* e) {
 
   ImpType t1 = e->left->accept(this);

@@ -132,6 +132,16 @@ public:
   ~WhileStatement();
 };
 
+class ForStatement : public Stm {
+public:
+  string iterator;
+  Exp* e1, *e2;
+  Body *body;
+  ForStatement(string iterator, Exp* e1, Exp* e2, Body* b);
+  int accept(ImpVisitor* v);
+  void accept(TypeVisitor* v);
+  ~ForStatement();
+};
 
 class StatementList {
 public:
