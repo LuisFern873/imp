@@ -23,6 +23,7 @@ public:
   int visit(IdExp* e);
   int visit(ParenthExp* e);
   int visit(CondExp* e);
+  int visit(TrueFalseExp* e);
 };
 
 

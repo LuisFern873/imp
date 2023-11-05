@@ -115,3 +115,9 @@ int ImpPrinter::visit(CondExp* e) {
   cout << ')';
   return 0;
 }
+
+int ImpPrinter::visit(TrueFalseExp* e) {
+  if (e->value) cout << "true";
+  else cout << "false";
+  return 0;
+}

@@ -140,3 +140,7 @@ ImpType ImpTypeChecker::visit(CondExp* e) {
   return ttype;
 }
 
+ImpType ImpTypeChecker::visit(TrueFalseExp* e) {
+  return booltype;
+}
+

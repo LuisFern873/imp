@@ -131,3 +131,7 @@ int ImpInterpreter::visit(CondExp* e) {
   else
     return e->etrue->accept(this);
 }
+
+int ImpInterpreter::visit(TrueFalseExp* e) {
+  return (e->value) ? 1 : 0;
+}
