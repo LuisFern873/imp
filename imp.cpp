@@ -13,6 +13,8 @@ string Exp::binopToString(BinaryOp op) {
   case LT: return "<";
   case LTEQ: return "<=";
   case EQ: return "==";
+  case AND: return "and";
+  case OR: return "or";
   }
   return "";
 }

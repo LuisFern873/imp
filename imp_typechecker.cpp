@@ -89,21 +89,26 @@ void ImpTypeChecker::visit(WhileStatement* s) {
 }
 
 ImpType ImpTypeChecker::visit(BinaryExp* e) {
+
   ImpType t1 = e->left->accept(this);
   ImpType t2 = e->right->accept(this);
-  if (!t1.match(inttype) || !t2.match(inttype)) {
-    cout << "Tipos en BinExp deben de ser int" << endl;
+  ImpType result;
+
+  // Si ambos operandos son de diferente tipo, entonces error
+  if (!t1.match(t2)) {
+    cout << "Tipos en BinExp deben de ser del mismo tipo" << endl;
     exit(0);
   }
-  ImpType result;
+  
   switch(e->op) {
-  case PLUS:   case MINUS:
-  case MULT:   case DIV:  case EXP:
-    result = inttype;
-    break;
-  case LT: case LTEQ: case EQ:
-    result = booltype;
-    break;
+    case PLUS: case MINUS: 
+    case MULT: case DIV: case EXP:
+      result = inttype;
+      break;
+    case LT: case LTEQ: case EQ:
+    case AND: case OR:
+      result = booltype;
+      break;
   }
   return result;
 }

@@ -3,10 +3,10 @@
 #include "imp_parser.hh"
 
 
-const char* Token::token_names[29] = {
+const char* Token::token_names[31] = {
   "LPAREN" , "RPAREN", "PLUS", "MINUS", "MULT","DIV","EXP","LT","LTEQ","EQ",
   "NUM", "ID", "PRINT", "SEMICOLON", "COMMA", "ASSIGN", "CONDEXP", "IF", "THEN", "ELSE", "ENDIF", "WHILE", "DO",
-  "ENDWHILE", "ERR", "END", "VAR", "TRUE", "FALSE"};
+  "ENDWHILE", "ERR", "END", "VAR", "TRUE", "FALSE", "AND", "OR"};
 
 Token::Token(Type type):type(type) { lexema = ""; }
 
@@ -41,6 +41,8 @@ Scanner::Scanner(string s):input(s),first(0),current(0) {
 
   reserved["true"] = Token::TRUE;
   reserved["false"] = Token::FALSE;
+  reserved["and"] = Token::AND;
+  reserved["or"] = Token::OR;
 }
 
 Token* Scanner::nextToken() {
@@ -301,14 +303,28 @@ Stm* Parser::parseStatement() {
 }
 
 Exp* Parser::parseExp() {
-  return parseCExp();
+  return parseBExp();
+}
+
+Exp* Parser::parseBExp()
+{
+  Exp* lhs, *rhs;
+  BinaryOp op;
+
+  lhs = parseCExp();
+  // Asociatividad por la derecha
+  if ( match(Token::AND) || match(Token::OR) ) {
+    Token::Type type = previous->type;
+    op = (type == Token::AND) ? AND : OR;
+    return new BinaryExp(lhs, parseBExp(), op);
+  }
+  return lhs;
 }
 
 Exp* Parser::parseCExp() {
   Exp *e, *rhs;
   e = parseAExp();
-  if(match(Token::LT) || match(Token::LTEQ) ||
-	match(Token::EQ)) {
+  if(match(Token::LT) || match(Token::LTEQ) || match(Token::EQ)) {
     Token::Type op = previous->type;
     BinaryOp binop = (op==Token::LT)?LT:((op==Token::LTEQ)?LTEQ:EQ);
     rhs = parseAExp();

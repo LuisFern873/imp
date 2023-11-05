@@ -1,5 +1,6 @@
 var bool a, b;
-a = true;
+a = true and true;
 b = false;
-print(a);
+print(a and (b or a));
+print(b or a);
 print(b)
