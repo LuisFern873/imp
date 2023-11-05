@@ -1,0 +1,7 @@
+var int i, n, factorial;
+n = 5;
+factorial = 1;
+for i : 1, n do
+    factorial = factorial * i
+endfor;
+print(factorial)

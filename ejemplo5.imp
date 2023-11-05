@@ -1,0 +1,8 @@
+var bool a, b, result;
+a = true and true;
+b = false;
+result = a and (b or a);
+print(result);
+result = b or a;
+print(result);
+print(b)

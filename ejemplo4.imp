@@ -1,0 +1,7 @@
+var int j, m, product;
+m = 5;
+product = 1;
+for j : m, m*2+1 do
+    product = product * j
+endfor;
+print(product)
